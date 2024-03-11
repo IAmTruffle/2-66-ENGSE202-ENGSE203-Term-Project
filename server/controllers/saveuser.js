@@ -1,6 +1,6 @@
 // saveuser.js
 
-const mysql = require('mysql');
+const mysql = require('express');
 const env = require('../env.js');
 const config = require('../dbconfig.js')[env];
 
