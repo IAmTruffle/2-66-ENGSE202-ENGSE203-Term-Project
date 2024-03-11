@@ -6,7 +6,7 @@ const config = require('../dbconfig.js')[env];
 
 const login = async (req, res = response) => {
   const { email, password } = req.body;
-  console.log(password);
+
  // const email = req.body.email;
  // const password  = req.body.password;
 
@@ -14,22 +14,20 @@ const login = async (req, res = response) => {
 
   let dbcon = mysql.createConnection(config);
 
-  dbcon.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
-
   const userDetails = "SELECT * FROM users where email = '" + email + "'";
   console.log(userDetails);
 
   dbcon.query(userDetails, function (err, user) {
     console.log(user);
+
     if (user.length > 0) {
-      if (password !== user[0].login_password) {
+
+      if (password !== user[0].password) {
         return res.status(400).json({
           msg: "User / Password are incorrect",
         });
       }
+
       res.status(200).json({ user })
 
       /*
@@ -47,6 +45,7 @@ const login = async (req, res = response) => {
 
     }
   })
+
 };
 
 module.exports = {
